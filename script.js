@@ -97,9 +97,23 @@ function conectarApp(card, nomeApp) {
     }, 1500);
 }
 
+/* --- FUNÇÃO CORRIGIDA PARA REDIRECIONAR DIRETO AO PERFIL --- */
+function irParaPerfilCliente() {
+    const catBtn = document.querySelector('.nav-btn[data-target="cat"]');
+    if (catBtn) {
+        catBtn.click(); // Altera a aba ativa e redefine a navegação interna
+        abrirCATDetalhe(); // Sobrescreve o reset forçando a abertura direta do perfil do cliente
+    }
+}
+
 function irParaCAT() {
     const catBtn = document.querySelector('.nav-btn[data-target="cat"]');
     if (catBtn) catBtn.click();
+}
+
+// Mantido para a barra de pesquisa genérica da home se necessário
+function irParaCATComBusca() {
+    irParaCAT();
 }
 
 function toggleExpandir(event, containerId) {
