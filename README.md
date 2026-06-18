@@ -37,7 +37,7 @@ Fluxo principal de atendimento a solicitações de dados. Possui duas sub-views:
 - Clique no card simula autenticação via API com feedback visual (⏳ → ✅)
 - Botão para adicionar nova plataforma
 
-### ESG — Painel de Evidências
+### ESG - Painel de Evidências
 - Cabeçalho com geração de Relatório de Governança (Pilar G)
 - Tabela de histórico de purgas realizadas com dados mascarados, plataformas varridas e status de certificação
 - Novas entradas são inseridas dinamicamente após cada purga concluída
