@@ -1,11 +1,11 @@
-/* Variáveis baseadas na paleta das imagens */
+/* --- Variáveis de Identidade e Design --- */
 :root {
     --bg-main: #f8f9fa;
-    --sidebar-bg: #a192b3; /* Roxo da barra lateral */
+    --sidebar-bg: #a192b3;
     --brand-yellow: #dce035;
-    --card-orange: #d26939; /* Laranja dos alertas */
-    --card-purple: #a192b3; /* Roxo para cards alternados */
-    --panel-grey: #e6e6e6; /* Cinza dos painéis */
+    --card-orange: #d26939;
+    --card-purple: #a192b3;
+    --panel-grey: #e6e6e6;
     --text-dark: #2c2c35;
     --text-light: #ffffff;
     --border-radius-pill: 50px;
@@ -13,6 +13,7 @@
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* --- Reset Geral --- */
 * {
     margin: 0;
     padding: 0;
@@ -27,19 +28,20 @@ body {
     overflow: hidden;
 }
 
+/* --- Estrutura Base Layout --- */
 .app-layout {
     display: flex;
     height: 100%;
 }
 
-/* --- Barra Lateral --- */
+/* --- Componentes: Barra Lateral (Sidebar) --- */
 .sidebar {
     width: 240px;
     background-color: var(--sidebar-bg);
     display: flex;
     flex-direction: column;
     padding: 2rem 1rem;
-    border-right: 2px solid #5bc0de; /* O detalhe azul das imagens */
+    border-right: 2px solid #5bc0de;
 }
 
 .brand {
@@ -80,9 +82,11 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-.nav-footer { margin-top: auto; }
+.nav-footer { 
+    margin-top: auto; 
+}
 
-/* --- Área Principal --- */
+/* --- Espaço de Conteúdo Principal --- */
 .main-content {
     flex: 1;
     padding: 3rem 4rem;
@@ -101,16 +105,31 @@ body {
     margin-bottom: 2rem;
 }
 
-.hidden { display: none !important; }
-
-/* --- Cards de Alerta (Estilo Pílula) --- */
-.alerts-container, .clients-list {
+/* --- Listas e Agrupamentos de Alertas/Clientes --- */
+.alerts-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
+/* Central de Atendimento (CAT) - Organização e Afastamento dos Clientes */
+.clients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Adiciona o espaçamento amplo desejado entre os cartões */
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Estabiliza a largura interna das pílulas de cliente */
+.clients-list .alert-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- Cartão de Alerta / Clientes (Estilo Pílula) --- */
 .alert-card {
     border-radius: var(--border-radius-pill);
     padding: 1.2rem 2rem;
@@ -170,10 +189,17 @@ body {
     flex-grow: 1;
 }
 
-.meta-label { font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 4px; display: inline-block; width: fit-content; }
+.meta-label { 
+    font-size: 0.85rem; 
+    border-bottom: 1px solid rgba(255,255,255,0.4); 
+    padding-bottom: 4px; 
+    display: inline-block; 
+    width: fit-content; 
+}
 .meta-value { font-weight: 600; }
 .meta-timer { font-size: 0.85rem; font-weight: 600; margin-top: 4px; }
 
+/* --- Elementos de Botões --- */
 .btn-outline-white {
     background: transparent;
     border: 1px solid white;
@@ -185,8 +211,18 @@ body {
 }
 .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
 
-/* --- Painéis Cinza (Bottom Dashboard & CAT Details) --- */
-.dashboard-panels, .detail-panels {
+.btn-primary { 
+    background: var(--sidebar-bg); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: var(--border-radius-pill); 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+
+/* --- Layouts de Painéis Intermediários --- */
+.dashboard-panels {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -198,11 +234,51 @@ body {
     padding: 2rem;
 }
 
-.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-.panel-header h3 { font-size: 1.1rem; color: #333; }
-.icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #555; }
+.report-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 20px;
+    border-radius: var(--border-radius-pill);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
 
-/* --- Hub de Conexões --- */
+.btn-report {
+    background: var(--panel-grey);
+    border: 1px solid #ccc;
+    padding: 6px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* --- Painel Customizado: Calendário --- */
+.calendar-panel { display: flex; flex-direction: column; }
+.calendar-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-weight: bold; }
+.calendar-title { color: #d32f2f; text-transform: uppercase; }
+.calendar-arrows span { margin-left: 10px; cursor: pointer; color: #d32f2f; user-select: none; }
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #555;
+}
+.calendar-days-grid span { padding: 4px 0; }
+.calendar-days-grid span.day-clickable { cursor: pointer; border-radius: 50%; transition: background 0.2s; }
+.calendar-days-grid span.day-clickable:hover { background: rgba(0,0,0,0.05); }
+.calendar-days-grid span.active-day {
+    background: #d32f2f !important;
+    color: white !important;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.calendar-day-label { font-weight: bold; color: #333; }
+
+/* --- Hub Grid e Elementos de Integração --- */
 .connections-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -240,7 +316,17 @@ body {
     background: rgba(161, 146, 179, 0.05);
 }
 
-/* --- CAT e Busca --- */
+.btn-primary-small { 
+    background: var(--sidebar-bg); 
+    color: white; 
+    border: none; 
+    padding: 8px 16px; 
+    border-radius: var(--border-radius-pill); 
+    cursor: pointer; 
+    margin-top: 10px;
+}
+
+/* --- Inputs de Busca --- */
 .search-container {
     display: flex;
     gap: 1rem;
@@ -260,25 +346,57 @@ body {
 .search-box input { border: none; outline: none; padding: 12px; width: 100%; font-size: 1rem; background: transparent; }
 .btn-filter { background: white; border: 1px solid #ccc; padding: 0 20px; border-radius: var(--border-radius-pill); cursor: pointer; font-weight: 600; }
 
-/* CAT Detalhe Ações */
-.data-locations { list-style: none; margin-top: 1.5rem; }
-.data-locations li { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #dcdcdc; }
-.plat-icon { margin-right: 10px; font-size: 1.2rem; }
-.status-indicator { margin-left: auto; font-size: 0.85rem; font-weight: bold; }
-.status-indicator.pending { color: var(--card-orange); }
-.status-indicator.purged { color: #2e7d32; }
+/* --- Linhas Internas de Detalhes (Plataformas) --- */
+.platform-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+    border: 1px solid #e0e0e0;
+    font-weight: 500;
+}
 
-.actions-panel { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.btn-danger-large { background: #d32f2f; color: white; border: none; padding: 15px 30px; border-radius: var(--border-radius-pill); font-size: 1.2rem; font-weight: 800; cursor: pointer; width: 100%; transition: 0.2s; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3); }
+.action-arrow { color: #888; font-weight: bold; cursor: pointer; }
+
+/* --- Botão Crítico de Remoção (Purga) --- */
+.btn-danger-large {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: var(--border-radius-pill);
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+}
+
 .btn-danger-large:hover { background: #b71c1c; transform: scale(1.02); }
 .success-text { color: #2e7d32; font-weight: bold; }
 .btn-icon-text { background: none; border: none; color: var(--sidebar-bg); font-weight: bold; cursor: pointer; text-decoration: underline; font-size: 1rem; }
 
-/* Utilitários */
-.mt-1 { margin-top: 1rem; } .mt-2 { margin-top: 2rem; } .mb-2 { margin-bottom: 2rem; } .text-sm { font-size: 0.9rem; color: #555; }
-.panel-header-flex { display: flex; justify-content: space-between; align-items: center; }
-.btn-primary { background: var(--sidebar-bg); color: white; border: none; padding: 10px 20px; border-radius: var(--border-radius-pill); cursor: pointer; font-weight: 600; }
-.btn-primary-small { background: var(--sidebar-bg); color: white; border: none; padding: 8px 16px; border-radius: var(--border-radius-pill); cursor: pointer; margin-top: 10px;}
+/* --- Tabelas de Histórico Executivo (ESG) --- */
 .esg-table { width: 100%; border-collapse: collapse; text-align: left; background: white; border-radius: 10px; overflow: hidden; }
 .esg-table th, .esg-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
 .badge-success { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+
+/* --- Helpers Utilitários de Margem e Texto --- */
+.mt-1 { margin-top: 1rem; } 
+.mt-2 { margin-top: 2rem; } 
+.mb-2 { margin-bottom: 2rem; } 
+.text-sm { font-size: 0.9rem; color: #555; }
+.panel-header-flex { display: flex; justify-content: space-between; align-items: center; }
+
+/* --- Gerenciamento de Estado de Visualização (Hidden e Animação) --- */
+.hidden { display: none !important; }
+.extra-data { animation: expandFade 0.3s ease forwards; }
+
+@keyframes expandFade {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

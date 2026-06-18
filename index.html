@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atria - Gestão de Privacidade</title>
-    <link rel="stylesheet" href="style.css">
+    <link class="styles" rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-layout">
-        <!-- Barra Lateral (Reflete a identidade visual das imagens) -->
         <aside class="sidebar">
             <div class="brand">
                 <span class="brand-icon">❂</span> atria
             </div>
             <nav class="nav-menu">
-                <button class="nav-btn active" data-target="dashboard">Home</button>
+                <button class="nav-btn active" data-target="home">Home</button>
                 <button class="nav-btn" data-target="cat">CAT</button>
                 <button class="nav-btn" data-target="riscos">Riscos</button>
                 <button class="nav-btn" data-target="hub">Conexões</button>
@@ -25,77 +24,131 @@
             </div>
         </aside>
 
-        <!-- Área Principal de Conteúdo -->
         <main class="main-content">
             
-            <!-- TELA 1: Dashboard de Riscos e Prazos (Ref: image_e162c3.png) -->
-            <section id="dashboard" class="view-section active">
-                <h1 class="page-title">Riscos e Prazos</h1>
-                
-                <div class="alerts-container">
-                    <!-- Card de Alerta (Laranja arredondado) -->
-                    <div class="alert-card orange">
-                        <div class="alert-icon-circle">!</div>
-                        <div class="alert-avatar"></div>
-                        <div class="alert-details">
-                            <strong>Nome do Cliente</strong>
-                            <span>Telefone: (11) 9 9999-9999</span>
-                            <span>E-mail: clientechato@gmail.com</span>
-                        </div>
-                        <div class="alert-divider"></div>
-                        <div class="alert-meta">
-                            <span class="meta-label">Tipo de Solicitação</span>
-                            <span class="meta-value">Exclusão de Dados</span>
-                            <span class="meta-timer">Prazo: 02 dias</span>
-                        </div>
-                        <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
+            <section id="home" class="view-section active">
+                <div class="panel grey-panel mb-2">
+                    <div class="panel-header">
+                        <h3>Quadro de avisos (risco e prazos)</h3>
                     </div>
-
-                    <div class="alert-card orange">
-                        <div class="alert-icon-circle">!</div>
-                        <div class="alert-avatar"></div>
-                        <div class="alert-details">
-                            <strong>Maria Ferreira</strong>
-                            <span>Telefone: (21) 9 8888-8888</span>
-                            <span>E-mail: maria.f@email.com</span>
+                    <div class="alerts-container">
+                        <div class="alert-card orange">
+                            <div class="alert-icon-circle">!</div>
+                            <div class="alert-avatar"></div>
+                            <div class="alert-details">
+                                <strong>Nome do Cliente</strong>
+                                <span>Telefone: (xx) x xxxx-xxxx</span>
+                                <span>E-mail: Clientechato@gmail.com</span>
+                            </div>
+                            <div class="alert-divider"></div>
+                            <div class="alert-meta">
+                                <span class="meta-label">Tipo de Solicitação</span>
+                                <span class="meta-timer">Prazo: xx dias</span>
+                            </div>
+                            <button class="btn-outline-white" onclick="irParaCAT()">Visualizar</button>
                         </div>
-                        <div class="alert-divider"></div>
-                        <div class="alert-meta">
-                            <span class="meta-label">Tipo de Solicitação</span>
-                            <span class="meta-value">Anonimização</span>
-                            <span class="meta-timer">Prazo: 05 dias</span>
+                        <div class="alert-card orange">
+                            <div class="alert-icon-circle">!</div>
+                            <div class="alert-avatar"></div>
+                            <div class="alert-details">
+                                <strong>Nome do Cliente</strong>
+                                <span>Telefone: (xx) x xxxx-xxxx</span>
+                                <span>E-mail: Clientechato@gmail.com</span>
+                            </div>
+                            <div class="alert-divider"></div>
+                            <div class="alert-meta">
+                                <span class="meta-label">Tipo de Solicitação</span>
+                                <span class="meta-timer">Prazo: xx dias</span>
+                            </div>
+                            <button class="btn-outline-white" onclick="irParaCAT()">Visualizar</button>
                         </div>
-                        <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
                     </div>
                 </div>
 
                 <div class="dashboard-panels">
                     <div class="panel grey-panel">
-                        <div class="panel-header">
-                            <h3>Status de Exposição ANPD</h3>
-                            <button class="icon-btn">⤢</button>
+                        <h3 class="mb-2">Gerar Relatórios</h3>
+                        <div class="report-row">
+                            <span>Relatório ESG</span>
+                            <button class="btn-report" onclick="gerarRelatorioESG()">Baixar</button>
                         </div>
-                        <div class="panel-body">
-                            <div class="exposure-meter">
-                                <div class="meter-fill" style="width: 70%;">Conformidade: 70%</div>
-                            </div>
-                            <p class="mt-1">Atenção: Atrasos podem resultar em advertências ou multas.</p>
+                        <div class="report-row">
+                            <span>Diferencial Comercial</span>
+                            <button class="btn-report" onclick="baixarPDF()">Baixar</button>
+                        </div>
+                        <div class="report-row">
+                            <span>Algum outro ai</span>
+                            <button class="btn-report" onclick="baixarPDF()">Baixar</button>
                         </div>
                     </div>
-                    <div class="panel grey-panel">
-                        <div class="panel-header">
-                            <h3>Risco de Marketplace</h3>
-                            <button class="icon-btn">⤢</button>
+                    
+                    <div class="panel grey-panel calendar-panel">
+                        <div class="calendar-header">
+                            <span class="calendar-title" id="calendar-month-year">Junho 2022</span>
+                            <div class="calendar-arrows">
+                                <span onclick="mudarMes(-1)">&lt;</span> 
+                                <span onclick="mudarMes(1)">&gt;</span>
+                            </div>
                         </div>
-                        <div class="panel-body list-body">
-                            <p><strong>Mercado Livre:</strong> Em conformidade.</p>
-                            <p><strong>Shopee:</strong> 1 solicitação pendente com risco de bloqueio de conta.</p>
+                        <div class="calendar-days-grid" id="calendar-days">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- TELA 2: Hub de Conexões (Ref: image_e162a1.png) -->
+            <section id="riscos" class="view-section hidden">
+                <h1 class="page-title">Riscos e Prazos</h1>
+                
+                <div class="alerts-container mb-2">
+                    <div class="alert-card orange">
+                        <div class="alert-icon-circle">!</div>
+                        <div class="alert-avatar"></div>
+                        <div class="alert-details">
+                            <strong>Nome do Cliente</strong>
+                            <span>Telefone: (xx) x xxxx-xxxx</span>
+                            <span>E-mail: Clientechato@gmail.com</span>
+                        </div>
+                        <div class="alert-divider"></div>
+                        <div class="alert-meta">
+                            <span class="meta-label">Tipo de Solicitação</span>
+                            <span class="meta-timer">Prazo: xx dias</span>
+                        </div>
+                        <button class="btn-outline-white" onclick="irParaCAT()">Visualizar</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-panels">
+                    <div class="panel grey-panel">
+                        <div class="panel-header-flex">
+                            <h3>Status de Exposição ANPD</h3>
+                            <button class="btn-icon-text" onclick="toggleExpandir(event, 'anpd-data')" style="text-decoration: none; font-size: 1.3rem;">⤢</button>
+                        </div>
+                        <div id="anpd-data" class="panel-body mt-1">
+                            <p class="text-sm">Pontuação de conformidade calculada de acordo com as diretrizes de privacidade.</p>
+                            <div class="extra-data hidden">
+                                <hr style="border: 0; border-top: 1px solid #ccc; margin: 1rem 0;">
+                                <p class="text-sm"><strong>Última varredura:</strong> Hoje, 10:24</p>
+                                <p class="text-sm"><strong>Vulnerabilidades:</strong> Nível Baixo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel grey-panel">
+                        <div class="panel-header-flex">
+                            <h3>Risco de Marketplace</h3>
+                            <button class="btn-icon-text" onclick="toggleExpandir(event, 'marketplace-data')" style="text-decoration: none; font-size: 1.3rem;">⤢</button>
+                        </div>
+                        <div id="marketplace-data" class="panel-body mt-1">
+                            <p class="text-sm">Integrações de API ativas monitorando riscos comerciais de privacidade.</p>
+                            <div class="extra-data hidden">
+                                <hr style="border: 0; border-top: 1px solid #ccc; margin: 1rem 0;">
+                                <p class="text-sm"><strong>Mercado Livre:</strong> Operação Regular</p>
+                                <p class="text-sm"><strong>Shopee:</strong> Sincronização Concluída</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="hub" class="view-section hidden">
                 <h1 class="page-title">Hub de Conexões</h1>
                 <p class="subtitle">Integre sistemas com um clique. Nós cuidamos do mapeamento de dados.</p>
@@ -133,119 +186,97 @@
                 </div>
             </section>
 
-            <!-- TELA 3: CAT - Lista e Busca (Ref: image_e1620b.png e image_e162e5.png) -->
             <section id="cat" class="view-section hidden">
-                <h1 class="page-title">Central de atendimento ao titular</h1>
-                
-                <div class="search-container">
-                    <div class="search-box">
-                        <span class="search-icon">🔍</span>
-                        <input type="text" id="cat-search" placeholder="Buscar por CPF ou E-mail...">
+                <div id="cat-main-view">
+                    <h1 class="page-title">Central de atendimento ao titular</h1>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="cat-search" placeholder="Buscar por CPF ou E-mail...">
+                        </div>
+                        <button class="btn-filter" onclick="buscarTitular()">Filtrar por</button>
                     </div>
-                    <button class="btn-filter" onclick="buscarTitular()">Filtrar por</button>
-                </div>
 
-                <div class="clients-list" id="clients-list">
-                    <h2 class="section-subtitle">Seus Clientes</h2>
+                    <h2 class="section-subtitle mb-2">Seus Clientes</h2>
                     
-                    <!-- Lista Alternada de Cores -->
-                    <div class="alert-card orange">
-                        <div class="alert-avatar"></div>
-                        <div class="alert-details">
-                            <strong>João Silva</strong>
-                            <span>Telefone: (11) 9 1234-5678</span>
-                            <span>E-mail: joao@email.com</span>
+                    <div class="clients-list">
+                        <div class="alert-card orange">
+                            <div class="alert-avatar"></div>
+                            <div class="alert-details">
+                                <strong>Nome do Cliente</strong>
+                                <span>Telefone: (xx) x xxxx-xxxx</span>
+                                <span>E-mail: Clientechato@gmail.com</span>
+                            </div>
+                            <div class="alert-divider"></div>
+                            <div class="alert-meta">
+                                <span class="meta-label">Tipo de Contato</span>
+                                <span class="meta-value">Ultima Solicitação:</span>
+                            </div>
+                            <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
                         </div>
-                        <div class="alert-divider"></div>
-                        <div class="alert-meta">
-                            <span class="meta-label">Ultima Solicitação:</span>
-                            <span class="meta-value">Pendente</span>
+                        <div class="alert-card purple">
+                            <div class="alert-avatar"></div>
+                            <div class="alert-details">
+                                <strong>Nome do Cliente</strong>
+                                <span>Telefone: (xx) x xxxx-xxxx</span>
+                                <span>E-mail: Clientechato@gmail.com</span>
+                            </div>
+                            <div class="alert-divider"></div>
+                            <div class="alert-meta">
+                                <span class="meta-label">Tipo de Contato</span>
+                                <span class="meta-value">Ultima Solicitação:</span>
+                            </div>
+                            <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
                         </div>
-                        <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
-                    </div>
-
-                    <div class="alert-card purple">
-                        <div class="alert-avatar"></div>
-                        <div class="alert-details">
-                            <strong>Ana Souza</strong>
-                            <span>Telefone: (31) 9 8765-4321</span>
-                            <span>E-mail: ana@email.com</span>
-                        </div>
-                        <div class="alert-divider"></div>
-                        <div class="alert-meta">
-                            <span class="meta-label">Ultima Solicitação:</span>
-                            <span class="meta-value">Resolvido</span>
-                        </div>
-                        <button class="btn-outline-white" onclick="abrirCATDetalhe()">Visualizar</button>
                     </div>
                 </div>
 
-                <!-- CAT - Visão de Detalhe (Ref: image_e161ed.png) -->
-                <div class="cat-detail hidden" id="cat-detail">
-                    <!-- Banner Laranja Fixo -->
-                    <div class="alert-card orange header-banner">
+                <div id="cat-detail-view" class="hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h1 class="page-title" style="margin: 0;">Perfil de Cliente</h1>
+                        <button class="btn-primary" onclick="fecharCATDetalhe()">Voltar</button>
+                    </div>
+                    <div class="alert-card orange mb-2">
                         <div class="alert-avatar"></div>
                         <div class="alert-details">
                             <strong id="detail-name">Nome do Cliente</strong>
                             <span>Telefone: (xx) x xxxx-xxxx</span>
                             <span>E-mail: Clientechato@gmail.com</span>
                         </div>
-                        <button class="btn-outline-white" onclick="fecharCATDetalhe()">Voltar</button>
                     </div>
 
-                    <div class="detail-panels">
-                        <div class="panel grey-panel left-panel">
+                    <div class="detail-panels" style="display: table; width: 100%;">
+                        <div class="panel grey-panel" style="display: table-cell; width: 60%; vertical-align: top; padding-right: 20px;">
                             <h3>Dados sensíveis do Cliente</h3>
-                            <p class="text-sm">Foram detectados dados de "Nome do Cliente" nas seguintes plataformas:</p>
+                            <p class="text-sm mb-2">Foram detectados dados seguintes de "Nome do Cliente" nas seguintes plataformas:</p>
                             
-                            <ul class="data-locations" id="data-locations">
-                                <li>
-                                    <span class="plat-icon">💬</span> WhatsApp 
-                                    <span class="status-indicator pending">Pendente</span>
-                                </li>
-                                <li>
-                                    <span class="plat-icon">🛍️</span> Shopify 
-                                    <span class="status-indicator pending">Pendente</span>
-                                </li>
-                                <li>
-                                    <span class="plat-icon">📦</span> Bling 
-                                    <span class="status-indicator pending">Pendente</span>
-                                </li>
-                                <li>
-                                    <span class="plat-icon">🎯</span> RD Station 
-                                    <span class="status-indicator pending">Pendente</span>
-                                </li>
-                            </ul>
+                            <div class="platform-row"><span>💬 Whatsapp</span> <span class="action-arrow">➔</span></div>
+                            <div class="platform-row"><span>📸 Instagram</span> <span class="action-arrow">➔</span></div>
+                            <div class="platform-row"><span>❌ X</span> <span class="action-arrow">➔</span></div>
+                            <div class="platform-row"><span>🎵 Tiktok</span> <span class="action-arrow">➔</span></div>
                         </div>
-                        
-                        <div class="panel grey-panel right-panel actions-panel">
-                            <h3>Ações de Resolução</h3>
-                            <p class="text-sm mb-2">Elimine o rastro de dados deste cliente em todos os canais integrados.</p>
-                            
-                            <button class="btn-danger-large" onclick="executarPurga()">
-                                💥 PURGA UNIFICADA
-                            </button>
-                            
-                            <div class="receipt-area mt-2 hidden" id="receipt-area">
-                                <p class="success-text">✅ Dados excluídos com sucesso.</p>
-                                <button class="btn-icon-text mt-1" onclick="baixarPDF()">
-                                    🖨️ Baixar Protocolo PDF
-                                </button>
+                        <div class="panel grey-panel unified-delete-panel" style="display: table-cell; width: 40%; vertical-align: top;">
+                            <div style="text-align: center; padding: 20px 0;">
+                                <button class="btn-danger-large" id="btn-purga" onclick="iniciarPurgaUnificada()">Purga Unificada</button>
+                                <div id="receipt-area" class="hidden mt-2">
+                                    <p class="success-text">✨ Operação concluída com sucesso!</p>
+                                    <button class="btn-primary mt-1" onclick="baixarPDF()">Baixar Recibo PDF</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- TELA 4: Painel ESG -->
             <section id="esg" class="view-section hidden">
-                <h1 class="page-title">Governança e Evidências ESG</h1>
-                <p class="subtitle">Gere relatórios de conformidade estruturados para negociações com Marketplaces e parceiros comerciais.</p>
-                
+                <h1 class="page-title">Painel de Evidências ESG</h1>
                 <div class="panel grey-panel mb-2">
                     <div class="panel-header-flex">
-                        <h3>Relatório de Governança de Dados (Pilar G)</h3>
-                        <button class="btn-primary" onclick="gerarRelatorioESG()">Exportar Relatório PDF</button>
+                        <div>
+                            <h3>Relatório de Governança (Pilar G)</h3>
+                            <p class="text-sm">Demonstre conformidade activa para parceiros comerciais</p>
+                        </div>
+                        <button class="btn-primary" onclick="gerarRelatorioESG()">Gerar Relatório</button>
                     </div>
                 </div>
 
@@ -270,12 +301,6 @@
                         </tbody>
                     </table>
                 </div>
-            </section>
-            
-            <!-- Adicionando a Seção Oculta "Riscos" como um alias para Dashboard, 
-                 já que na sidebar temos "Home" e "Riscos". -->
-            <section id="riscos" class="view-section hidden">
-                <!-- O JS redirecionará Riscos para Dashboard para manter a fluidez -->
             </section>
 
         </main>

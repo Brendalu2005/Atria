@@ -1,32 +1,87 @@
+let dataAtual = new Date();
+let diaSelecionado = dataAtual.getDate();
+
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Roteamento Simples (SPA) baseado na Sidebar
     const navButtons = document.querySelectorAll('.nav-menu .nav-btn');
     const sections = document.querySelectorAll('.view-section');
 
     navButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Se clicar em Riscos, direciona para o Dashboard (Visão Geral unificada)
             let targetId = e.target.getAttribute('data-target');
-            if(targetId === 'riscos') targetId = 'dashboard';
 
-            // Atualiza botões
             navButtons.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
 
-            // Atualiza Telas
             sections.forEach(sec => sec.classList.add('hidden'));
             const targetSection = document.getElementById(targetId);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
             }
 
-            // Se voltar para CAT principal, garante que o detalhe esteja fechado
             if(targetId === 'cat') fecharCATDetalhe();
         });
     });
+
+    renderizarCalendario();
 });
 
-// 2. Hub de Conexões: Fluxo "One-Click"
+function renderizarCalendario() {
+    const monthYearText = document.getElementById('calendar-month-year');
+    const daysGrid = document.getElementById('calendar-days');
+    if (!daysGrid || !monthYearText) return;
+
+    daysGrid.innerHTML = '';
+
+    const meses = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+    const diasSemana = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
+
+    monthYearText.innerText = `${meses[dataAtual.getMonth()]} de ${dataAtual.getFullYear()}`;
+
+    diasSemana.forEach(dia => {
+        const span = document.createElement('span');
+        span.className = 'calendar-day-label';
+        span.innerText = dia;
+        daysGrid.appendChild(span);
+    });
+
+    const primeiroDiaMes = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1).getDay();
+    const totalDiasMes = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 1, 0).getDate();
+
+    for (let i = 0; i < primeiroDiaMes; i++) {
+        const empySpan = document.createElement('span');
+        daysGrid.appendChild(empySpan);
+    }
+
+    for (let dia = 1; dia <= totalDiasMes; dia++) {
+        const daySpan = document.createElement('span');
+        daySpan.innerText = dia;
+        daySpan.className = 'day-clickable';
+
+        if (dia === diaSelecionado) {
+            daySpan.classList.add('active-day');
+        }
+
+        daySpan.addEventListener('click', () => {
+            document.querySelectorAll('.day-clickable').forEach(el => el.classList.remove('active-day'));
+            daySpan.classList.add('active-day');
+            diaSelecionado = dia;
+        });
+
+        daysGrid.appendChild(daySpan);
+    }
+}
+
+function mudarMes(direcao) {
+    dataAtual.setMonth(dataAtual.getMonth() + direcao);
+    if (direcao !== 0) {
+        diaSelecionado = 1;
+    }
+    renderizarCalendario();
+}
+
 function conectarApp(card, nomeApp) {
     const btn = card.querySelector('.btn-connect');
     if (btn.classList.contains('connected')) return;
@@ -39,28 +94,32 @@ function conectarApp(card, nomeApp) {
         btn.innerText = `✅ Conectado`;
         card.style.opacity = '1';
         card.style.borderColor = '#4caf50';
-    }, 1500); // Simulando o tempo de loading
+    }, 1500);
 }
 
-// 3. Central de Atendimento (CAT) - Navegação Mestre/Detalhe
+function irParaCAT() {
+    const catBtn = document.querySelector('.nav-btn[data-target="cat"]');
+    if (catBtn) catBtn.click();
+}
+
+function toggleExpandir(event, containerId) {
+    event.stopPropagation();
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const extraData = container.querySelector('.extra-data');
+    if (extraData) {
+        extraData.classList.toggle('hidden');
+    }
+}
+
 function abrirCATDetalhe() {
-    document.getElementById('clients-list').classList.add('hidden');
-    document.querySelector('.search-container').classList.add('hidden');
-    document.getElementById('cat-detail').classList.remove('hidden');
-    
-    // Reseta estado da purga caso o usuário volte
-    document.getElementById('receipt-area').classList.add('hidden');
-    const indicators = document.querySelectorAll('.status-indicator');
-    indicators.forEach(ind => {
-        ind.className = 'status-indicator pending';
-        ind.innerText = 'Pendente';
-    });
+    document.getElementById('cat-main-view').classList.add('hidden');
+    document.getElementById('cat-detail-view').classList.remove('hidden');
 }
 
 function fecharCATDetalhe() {
-    document.getElementById('cat-detail').classList.add('hidden');
-    document.getElementById('clients-list').classList.remove('hidden');
-    document.querySelector('.search-container').classList.remove('hidden');
+    document.getElementById('cat-detail-view').classList.add('hidden');
+    document.getElementById('cat-main-view').classList.remove('hidden');
 }
 
 function buscarTitular() {
@@ -69,45 +128,39 @@ function buscarTitular() {
         alert("Digite um CPF ou E-mail para buscar nas bases integradas.");
         return;
     }
-    // Mágica para o lojista: simula busca rápida pulando direto pro detalhe
     abrirCATDetalhe();
     document.getElementById('detail-name').innerText = `Resultado para: ${termo}`;
 }
 
-// 4. Ação Principal: Purga Unificada (One-Click Delete)
-function executarPurga() {
-    const confirmar = confirm("Isso acionará a API de todos os sistemas conectados para deletar os dados deste usuário permanentemente. Deseja prosseguir?");
-    
-    if (!confirmar) return;
-
-    const btn = document.querySelector('.btn-danger-large');
+function iniciarPurgaUnificada() {
+    const btn = document.getElementById('btn-purga');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ EXECUTANDO PURGA...';
+    
+    btn.innerHTML = "⏳ Varrendo sistemas...";
     btn.style.pointerEvents = 'none';
-    btn.style.opacity = '0.8';
+    btn.style.opacity = '0.7';
 
-    const plataformas = document.querySelectorAll('#data-locations li');
-    let delay = 0;
+    const plataformas = document.querySelectorAll('.platform-row');
+    let delay = 600;
 
-    // Efeito cascata deletando um por um visualmente
-    plataformas.forEach((plat, index) => {
+    plataformas.forEach((row, index) => {
         setTimeout(() => {
-            const status = plat.querySelector('.status-indicator');
-            status.innerText = "Excluindo...";
-            
+            const status = row.querySelector('.action-arrow');
+            status.innerHTML = "⏳ Removendo...";
+            status.style.color = "#d32f2f";
+
             setTimeout(() => {
-                status.className = 'status-indicator purged';
                 status.innerText = "✅ Deletado";
+                status.style.color = "#2e7d32";
                 
-                // Se for o último, finaliza o processo
                 if (index === plataformas.length - 1) {
                     btn.innerHTML = originalText;
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
-                    btn.style.display = 'none'; // Esconde o botão após sucesso
+                    btn.style.display = 'none';
                     
                     document.getElementById('receipt-area').classList.remove('hidden');
-                    inserirEvidenciaESG(); // Popula o relatório ESG automaticamente
+                    inserirEvidenciaESG();
                 }
             }, 600);
         }, delay);
@@ -115,7 +168,6 @@ function executarPurga() {
     });
 }
 
-// 5. Relatórios e ESG
 function baixarPDF() {
     alert("Iniciando o download do recibo criptografado (PDF) contendo os logs da operação para fins de conformidade com a ANPD.");
 }
@@ -126,14 +178,15 @@ function gerarRelatorioESG() {
 
 function inserirEvidenciaESG() {
     const tbody = document.getElementById('esg-history');
+    if (!tbody) return;
     const tr = document.createElement('tr');
     const hoje = new Date().toLocaleDateString('pt-BR');
     
     tr.innerHTML = `
         <td>${hoje}</td>
         <td>***.***.***-**</td>
-        <td>WhatsApp, Shopify, Bling, RD Station</td>
+        <td>WhatsApp, Instagram, X, Tiktok</td>
         <td><span class="badge-success">Certificado</span></td>
     `;
-    tbody.prepend(tr);
+    tbody.insertBefore(tr, tbody.firstChild);
 }
