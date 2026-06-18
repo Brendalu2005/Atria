@@ -69,10 +69,9 @@ python3 -m http.server 8080
 
 ---
 
-## Stack
+## Stack (inicial)
 
 - HTML5, CSS3 e JavaScript vanilla — sem frameworks ou bibliotecas externas
-- Fonte: Inter via system font stack
 
 ---
 
